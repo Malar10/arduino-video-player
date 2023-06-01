@@ -21,7 +21,7 @@ def smallbitmapstringify(im):
 
 def writeToFile(filename: str, data: list):
 
-    with open("arduino_8x8_LED_Video.ino", "w") as file:
+    with open(filename, "w") as file:
         file.write(f"const int frames = {len(data)};\n")
         file.write(f"const float ms_per_frame = {frameduration};\n")
         file.write(f"const PROGMEM byte videodata[{len(data)}][8] = {{ \n")
@@ -88,6 +88,6 @@ for i in range(outputframes):
 
             
 
-writeToFile("arduino_8x8_LED_Video.ino", values)
+writeToFile("data.h", values)
 
 print("done!")
