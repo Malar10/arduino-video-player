@@ -33,15 +33,6 @@ void loop() {
 
   drawScreen(frame);
 
-
-}
-
-void drawPoint(int x, int y) {
-  digitalWrite(row[x], HIGH);
-  digitalWrite(col[y], LOW);
-  delay(3);
-  digitalWrite(row[x], LOW);
-  digitalWrite(col[y], HIGH);
 }
 
 void drawRow(int rownum, byte b) {
