@@ -19,7 +19,7 @@ def smallbitmapstringify(im):
 
     return valuestring
 
-def writeToFile(filename: str, data: list):
+def writeToFile(filename: str, data: list, frameduration: float):
 
     with open(filename, "w") as file:
         file.write(f"const int frames = {len(data)};\n")
@@ -46,48 +46,51 @@ def getFile():
     print(f"found file {filename}")
     return im
 
-while True:
-    im = getFile()
+def main():
+
+
+    while True:
+        im = getFile()
+        print()
+        if im != None:
+            break
+
+
+    print(im)
+    print(im.info)
     print()
-    if im != None:
-        break
+
+    list = ImageSequence.all_frames(im)
+    im.close()
+
+    inputframes = len(list)
+    totalDuration = sum([frame.info["duration"] for frame in list])
+    input_frameduration = totalDuration / len(list)
+
+    print(f"input frames: {inputframes}")
+    print(f"total duration: {totalDuration}ms")
+    print(f"input average frame duration: {input_frameduration} ms")
+
+    output_frameduration = int(input(f"output frame duration in ms: "))
+    outputframes = int(inputframes * (input_frameduration / output_frameduration))
+    print(f"output frames: {outputframes}")
+    print()
+
+    response = input("Continue? [y/n] (will overwrite data.h) ")
+    if response.lower() != "y":
+        return
+    
+    print("converting images")
+    values = []
+    for i in range(outputframes):
+        index = int((output_frameduration / input_frameduration) * i)
+        valuestring = smallbitmapstringify(list[index])
+        values.append(valuestring)
+
+    print("conversion done!")
+    print("writing values to file...")
+    writeToFile("data.h", values, output_frameduration)
+    print("done!")
 
 
-print(im)
-print(im.info)
-print()
-
-input_frameduration = im.info['duration']
-
-list = ImageSequence.all_frames(im)
-im.close()
-
-inputframes = len(list)
-
-print(f"input frames: {inputframes}")
-print(f"input frame duration: {input_frameduration}")
-
-frameduration = int(input(f"output frame duration in ms: "))
-
-ratio = frameduration / input_frameduration
-print(ratio)
-
-outputframes = int(inputframes * (1/ratio))
-
-
-print(f"output frames: {outputframes}")
-
-input("you sure about this?")
-
-values = []
-for i in range(outputframes):
-    index = int(ratio * i)
-    valuestring = smallbitmapstringify(list[index])
-    values.append(valuestring)
-
-
-            
-
-writeToFile("data.h", values)
-
-print("done!")
+main()
