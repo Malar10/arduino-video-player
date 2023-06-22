@@ -26,3 +26,13 @@ some way to upload the project files to your arduino
 for the python script you will need:
 - python 3.10 or newer: https://www.python.org/downloads/
 - Pillow 9.5.0 (Python Image Library fork): https://pillow.readthedocs.io/en/stable/index.html
+
+
+## How to use
+
+1. make sure your hardware and software are set up correctly
+2. (optional) use the included python script to convert a gif of your choice
+    - the output will be written to data.h in the project folder
+4. upload the Arduino project to your Arduino board
+    - the video data will be read from the data.h file
+5. profit
