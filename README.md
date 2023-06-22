@@ -1,7 +1,6 @@
 # arduino-video-player
 A tool displaying videos on an 8x8 led matrix that is connected directly to an Arduino board. Also includes a python script for taking gif-files and conveniently loading them into the Arduino's memory.
 
-TODO description again because apparently i overwrote it at some point
 ## Requirements
 
 ### Hardware
